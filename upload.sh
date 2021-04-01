@@ -15,8 +15,12 @@ function copyfrom() {
     cd $1
     docker cp kime-aur:/home/aur/work/$1/PKGBUILD .
     docker cp kime-aur:/home/aur/work/$1/.SRCINFO .
-    git commit -am "$VER" || true
-    git push || true
+    if [ -z "$(git status --porcelain)" ]; then
+        # Nothing to commit
+    else
+        git commit -am "$VER" || true
+        git push || true
+    fi
     cd ..
 }
 

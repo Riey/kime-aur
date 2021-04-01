@@ -2,7 +2,9 @@
 
 function setsrcinfo() {
     cd $1
-    sed "s/^md5.*/$(makepkg -g)/" -i PKGBUILD
+    makepkg -g | python ../replace.py
+    cat PKGBUILD.replace
+    mv PKGBUILD.replace PKGBUILD
     makepkg --nobuild --noconfirm
     makepkg --printsrcinfo > ./.SRCINFO
     cd ..
