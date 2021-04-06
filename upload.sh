@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -15,8 +15,8 @@ function copyfrom() {
     cd $1
     docker cp kime-aur:/home/aur/work/$1/PKGBUILD .
     docker cp kime-aur:/home/aur/work/$1/.SRCINFO .
-    if [ -z "$(git status --porcelain)" ]; then
-        # Nothing to commit
+    if [[ -z "$(git status --porcelain)" ]]; then
+        echo Nothing to commit
     else
         git commit -am "$VER" || true
         git push || true
